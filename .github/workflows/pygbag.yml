@@ -2,11 +2,10 @@ name: pygbag_build
 on: [workflow_dispatch]
 
 permissions:
-  contents: write  # GITHUB_TOKEN に push 権限を付与
+  contents: write
 
 jobs:
   build-pygbag:
-    name: Build for Emscripten pygbag runtime
     runs-on: ubuntu-latest
 
     steps:
@@ -19,10 +18,11 @@ jobs:
       run: python -m pygbag --build $GITHUB_WORKSPACE/main.py
 
     - name: Deploy to GitHub Pages
-      uses: JamesIves/github-pages-deploy-action@4.4.0  # 最新バージョン
+      uses: JamesIves/github-pages-deploy-action@4.4.0
       with:
-        branch: gh-pages
-        folder: build/web
-        clean: true              # 既存ファイルを削除して上書き
-        force_orphan: true       # 非 fast-forward でも push 可能にする
-        allow_empty_commit: true # ファイルがなくてもコミット可能
+        branch: gh-pages     # push 先ブランチ（存在しなくても作成される）
+        folder: build/web    # デプロイするフォルダ
+        clean: true          # フォルダをクリーンアップ
+        force_orphan: true   # 非 fast-forward でも push 可能
+        allow_empty_commit: true
+        commit_message: "Deploy pygbag build [skip ci]"
