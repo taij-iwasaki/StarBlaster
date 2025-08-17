@@ -23,4 +23,6 @@ jobs:
       with:
         branch: gh-pages
         folder: build/web
-        clean: true  # 既存のファイルを上書き
+        clean: true              # 既存ファイルを削除して上書き
+        force_orphan: true       # 非 fast-forward でも push 可能にする
+        allow_empty_commit: true # ファイルがなくてもコミット可能
